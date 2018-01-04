@@ -1,0 +1,6 @@
+#cart_view {
+	border: .1rem solid #000000;
+	margin: 1rem 1rem 1rem 1rem;
+	height: 40vh;
+	box-shadow: 5px 5px 1px rgba(0,0,0,0.5);
+}
