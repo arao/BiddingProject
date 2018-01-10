@@ -109,10 +109,11 @@
                         <p  class="card-text" style="margin-bottom: 0px;">
                             <%= bidadd[i].name %>
                         </p>
+                        <% var timeperiod = bidadd[i].timeperiod %>
                     </div>
                     <script type="text/javascript">
                         alert("knkl");
-                        var countDownDate = new Date(<%=bidadd[i].timeperiod %>).getTime();
+                        var countDownDate = new Date(<%= timeperiod %>).getTime();
                         var x = setInterval(function() {
                             var now = new Date().getTime();
                             var distance = countDownDate - now;
