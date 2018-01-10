@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+    <title>BID</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/public/style.css">
+</head>
+    <body style="background-color: #f3f3f3">
+        <nav class=" navbar-expand-lg navbar-dark navbar-fixed-top" style="background-color: #323754">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">BIDDING</a>
+                </div>
+                <form class="navbar-form navbar-right">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="active" href="/">HOME</a></li>
+                    <% if(user) {%>
+                    <li><a href="/biddetail/?use=<%= user.name %>?use=<%= user.email %>">ADD BID</a></li>
+                    <li><a href="/users/logout">LOGOUT</a></li>
+                    <%  } %>
+                    <% if(!user) {%>
+                    <li><a href="/users/register">ADD BID</a></li>
+                    <li><a href="/users/login">LOGIN</a></li>
+                    <li><a href="/users/register">REGISTER</a></li>
+                    <%  } %>
+                </ul>
+            </div>
+        </nav>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="container" id="main_section">
+            <div class="row bidadd">
+                <% for(var i=bidadd.length-1; i>=0; i--) {  %>
+                    <div class="col-lg-3 card " id="cart_view" >
+                        <div class="card-body">
+                            <a href="/" style="text-decoration: none;color: black;">
+                                <h4 class="card-title" class="posttitle" style="min-height:50px;">
+                                    <%= bidadd[i].itemname %>
+                                </h4>
+                            </a>
+                            <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px;">
+                                Starting Bid: <%= bidadd[i].minprice %>
+                            </h6>
+                            <p id="postdescription" class="card-text" style="margin-bottom: 0px;">
+                                <%= bidadd[i].description %>
+                            </p>
+                            <br>
+                            <br>
+                            <br>
+                            <%  if(user) {%>
+                                <a href="/bidonitem/?bid=<%= bidadd[i]._id.toString()%>&email=<%= bidadd[i].email %>">
+                                    <button type="submit">Bid On Item</button>
+                                </a>
+                                <br>
+                            <%  } %>
+                            <%  if(!user) {%>
+                                <a href="/users/register">
+                                    <button type="submit">
+                                        Bid On Item
+                                    </button>
+                                </a>
+                                <br>
+                            <%  }  %>
+                            <br>
+                            <br>
+                            <% for(var itr=bidmoney.length-1; itr>=0; itr--) {  %>
+                                <% if(bidmoney[itr].postid==bidadd[i]._id.toString()) { %>
+                                    <% if(parseInt(bidmoney[itr].add_money)>789078) { %>
+                                        <span>
+                                            Current Bid:<%= bidmoney[itr].add_money %>
+                                        </span>
+                                        <br>
+                                    <%  }   %>
+                                    <% if(bidmoney[itr].add_money) {    %>
+                                        <span>
+                                            Current Bid:<%= bidmoney[itr].add_money %>
+                                        </span>
+                                    <%  }   %>
+                                <%  }   %>
+                            <%  }   %>
+                        </div>
+                        <br>
+                        <p id="demo">
+
+                        </p>
+                        <br>
+                        <!--<p></p>-->
+                        <br>
+                        <span>
+                            Posted by -
+                        </span>
+                        <p  class="card-text" style="margin-bottom: 0px;">
+                            <%= bidadd[i].name %>
+                        </p>
+                    </div>
+                    <script type="text/javascript">
+                        alert("knkl");
+                        var countDownDate = new Date(<%=bidadd[i].timeperiod %>).getTime();
+                        var x = setInterval(function() {
+                            var now = new Date().getTime();
+                            var distance = countDownDate - now;
+                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                            document.getElementById("demo").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                            if (distance < 0) {
+                                clearInterval(x);
+                                document.getElementById("demo").innerHTML = "EXPIRED";
+                            }
+                        }, 1000);
+                    </script>
+                <%  }   %>
+            </div>
+        </div>
+    </body>
+</html>
